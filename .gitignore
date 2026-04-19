@@ -1,2 +1,37 @@
-/target
-apple/generated/
+# Rust
+/target/
+Cargo.lock
+
+# macOS
+.DS_Store
+
+# Node / web
+node_modules/
+.next/
+dist/
+build/
+
+# Tauri
+/src-tauri/target/
+
+# Xcode / iOS
+DerivedData/
+*.xcworkspace
+*.xcuserdata
+*.xcodeproj/project.xcworkspace
+
+# Android / Gradle
+.gradle/
+build/
+local.properties
+*.iml
+
+# Logs
+*.log
+
+# Env files
+.env
+.env.local
+
+# Misc
+*.swp

@@ -1,4 +1,6 @@
 mod core;
+mod http;
+mod sse;
 
 use crate::core::{Core, Message};
 use shared::Event;
@@ -13,7 +15,9 @@ impl Component for RootComponent {
     type Message = Message;
     type Properties = ();
 
-    fn create(_ctx: &Context<Self>) -> Self {
+    fn create(ctx: &Context<Self>) -> Self {
+        ctx.link().send_message(Message::Event(Event::StartWatch));
+
         Self { core: core::new() }
     }
 
@@ -35,23 +39,25 @@ impl Component for RootComponent {
         let view = self.core.view();
 
         html! {
-            <section class="box container has-text-centered m-5">
-                <p class="is-size-5">{&view.count}</p>
-                <div class="buttons section is-centered">
-                    <button class="button is-primary is-danger"
-                        onclick={link.callback(|_| Message::Event(Event::Reset))}>
-                        {"Reset"}
-                    </button>
-                    <button class="button is-primary is-success"
-                        onclick={link.callback(|_| Message::Event(Event::Increment))}>
-                        {"Increment"}
-                    </button>
-                    <button class="button is-primary is-warning"
-                        onclick={link.callback(|_| Message::Event(Event::Decrement))}>
-                        {"Decrement"}
-                    </button>
-                </div>
-            </section>
+            <>
+                <section class="section has-text-centered">
+                    <h1 class="title">{"Crux Counter Example"}</h1>
+                    <p class="is-size-5">{"Rust Core, Rust Shell (Yew)"}</p>
+                </section>
+                <section class="container has-text-centered">
+                    <p class="is-size-5">{&view.text}</p>
+                    <div class="buttons section is-centered">
+                        <button class="button is-primary is-warning"
+                            onclick={link.callback(|_| Message::Event(Event::Decrement))}>
+                            {"Decrement"}
+                        </button>
+                        <button class="button is-primary is-danger"
+                            onclick={link.callback(|_| Message::Event(Event::Increment))}>
+                            {"Increment"}
+                        </button>
+                    </div>
+                </section>
+            </>
         }
     }
 }

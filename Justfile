@@ -1,31 +1,15 @@
-mod lib './lib.just'
+build:
+    cargo build
 
-default: dev
+clean:
+    just Android/clean
+    just cli/clean
+    just iOS/clean
+    just web-dioxus/clean
+    just web-leptos/clean
+    just web-nextjs/clean
+    just web-remix/clean
+    just web-yew/clean
 
-common := "shared tui web-leptos web-yew web-dioxus web-nextjs web-react-router tauri Android"
-shells := if os() == "macos" { common + " apple" } else { common }
-
-# checks required tools across all shells
-[script('sh')]
-doctor:
-    for shell in {{ shells }}; do
-        echo '{{ style("command") }}'"$shell"':{{ NORMAL }}'
-        just "$shell/doctor"
-        echo ''
-    done
-
-# local development workflow
-[script('sh')]
-dev:
-    for shell in {{ shells }}; do
-        echo '{{ style("command") }}'"$shell"'/dev:{{ NORMAL }}'
-        just "$shell/dev"
-    done
-
-# CI workflow
-[script('sh')]
-ci:
-    for shell in {{ shells }}; do
-        echo '{{ style("command") }}'"$shell"'/ci:{{ NORMAL }}'
-        just "$shell/ci"
-    done
+test:
+    cargo nextest run

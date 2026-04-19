@@ -5,7 +5,7 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Crux Simple Counter Example",
+  title: "Crux Counter Example - NextJS",
   description: "Rust Core, TypeScript Shell (NextJS)",
 };
 
